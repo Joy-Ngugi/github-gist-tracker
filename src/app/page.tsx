@@ -37,29 +37,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
       
-      {/* Navbar */}
-      {/* <nav className="w-full bg-green-600 text-white p-4 flex justify-between items-center shadow-md">
-        <Link href="/" className="text-xl font-bold">📂 Gist Tracker</Link>
-        <div className="flex items-center space-x-4">
-          <Link href="/gists" className="hover:underline">Gists</Link>
-          <Link href="/profile" className="hover:underline">Profile</Link>
-          {session ? (
-            <button 
-              onClick={() => signOut()} 
-              className="px-4 py-2 bg-red-500 rounded-lg text-white hover:bg-red-700"
-            >
-              Logout
-            </button>
-          ) : (
-            <button 
-              onClick={() => signIn("github")} 
-              className="px-4 py-2 bg-black rounded-lg text-white hover:bg-gray-800"
-            >
-              Sign in
-            </button>
-          )}
-        </div>
-      </nav> */}
+      
 
       {/* Hero Section */}
       <div className="flex flex-col items-center justify-center py-12 px-6 text-center">
