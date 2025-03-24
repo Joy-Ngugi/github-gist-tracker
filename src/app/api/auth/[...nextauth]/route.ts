@@ -18,12 +18,13 @@
 // export { handler as GET, handler as POST };
 
 
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "@/lib/mongodb";
+import type { NextAuthOptions } from "next-auth";
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID!,
@@ -36,5 +37,6 @@ export const authOptions: NextAuthOptions = {
 
 const handler = NextAuth(authOptions);
 
-// ✅ Correctly exporting as App Router API Route
-export { handler as GET, handler as POST };
+// ✅ Correct App Router export
+export const GET = handler;
+export const POST = handler;
