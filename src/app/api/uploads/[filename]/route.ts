@@ -40,12 +40,11 @@ import { join } from "path";
 import type { NextRequest } from "next/server";
 import mime from "mime-types";
 
-interface Context {
-  params: { filename: string };
-}
-
-export async function GET(req: NextRequest, context: Context) {
-  const { filename } = context.params;
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { filename: string } } // ✅ Correctly typed
+) {
+  const { filename } = params;
 
   if (!filename) {
     return NextResponse.json({ error: "Filename is required" }, { status: 400 });
