@@ -40,18 +40,15 @@ import { join } from "path";
 import type { NextRequest } from "next/server";
 import mime from "mime-types";
 
-
 export async function GET(
   req: NextRequest,
-  { params }: { params: { filename: string } } // ✅ Correctly typed
+  { params }: { params: { filename: string } } // ✅ Correct structure
 ) {
-  const { filename } = params;
-
-  if (!filename) {
+  if (!params.filename) {
     return NextResponse.json({ error: "Filename is required" }, { status: 400 });
   }
 
-  const filePath = join(process.cwd(), "public/uploads", filename);
+  const filePath = join(process.cwd(), "public/uploads", params.filename);
 
   try {
     const fileBuffer = await fs.readFile(filePath);
