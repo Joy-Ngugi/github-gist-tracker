@@ -41,18 +41,17 @@ import type { NextRequest } from "next/server";
 import mime from "mime-types";
 
 export async function GET(
-  req: NextRequest,
-  context: { params: { filename?: string } } // ✅ Corrected type
+  req: NextRequest, 
+  context: { params: Promise<{ filename: string }> } // ✅ Fix: Make params a Promise
 ) {
-  const filename = context.params.filename; // ✅ Access params correctly
-
-  if (!filename) {
-    return NextResponse.json({ error: "Filename is required" }, { status: 400 });
-  }
-
-  const filePath = join(process.cwd(), "public/uploads", filename);
-
   try {
+    const { filename } = await context.params; // ✅ Fix: Await params
+
+    if (!filename) {
+      return NextResponse.json({ error: "Filename is required" }, { status: 400 });
+    }
+
+    const filePath = join(process.cwd(), "public/uploads", filename);
     const fileBuffer = await fs.readFile(filePath);
     const mimeType = mime.lookup(filePath) || "application/octet-stream";
 
