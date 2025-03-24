@@ -2,6 +2,9 @@
 
 import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebookF, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
+
 
 export default function Layout({ children }: { children: React.ReactNode }) {
     const { data: session } = useSession();
@@ -34,6 +37,32 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* 📄 Main Content */}
       <main className="flex-1 container mx-auto p-6">{children}</main>
+
+
+      <footer className="bg-gray-900 text-white py-6 mt-10">
+      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+        {/* Left Section */}
+        <div className="text-center md:text-left">
+          <h2 className="text-xl font-semibold">Github Gist Tracker</h2>
+          <p className="text-sm text-gray-400 mt-1">
+            © {new Date().getFullYear()} All rights reserved.
+          </p>
+        </div>
+
+        {/* Social Links */}
+        <div className="flex space-x-4 mt-4 md:mt-0">
+          <a href="#" className="text-gray-400 hover:text-white transition">
+            <FontAwesomeIcon icon={faFacebookF} className="w-5 h-5" />
+          </a>
+          <a href="#" className="text-gray-400 hover:text-white transition">
+            <FontAwesomeIcon icon={faTwitter} className="w-5 h-5" />
+          </a>
+          <a href="#" className="text-gray-400 hover:text-white transition">
+            <FontAwesomeIcon icon={faInstagram} className="w-5 h-5" />
+          </a>
+        </div>
+      </div>
+    </footer>
     </div>
   );
 }
