@@ -42,10 +42,9 @@ import mime from "mime-types";
 
 export async function GET(
   req: NextRequest,
-  context: { params: { filename: string } } // Explicitly defining the params
+  { params }: { params: { filename: string } } // ✅ Correct Next.js App Router context
 ) {
-  // Ensure params are awaited if necessary
-  const { filename } = await context.params; // 👈 Explicitly await params
+  const { filename } = params; // ❌ No need to await params
 
   if (!filename) {
     return NextResponse.json({ error: "Filename is required" }, { status: 400 });
