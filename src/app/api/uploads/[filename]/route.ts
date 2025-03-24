@@ -40,6 +40,7 @@ import { join } from "path";
 import type { NextRequest } from "next/server";
 import mime from "mime-types";
 
+
 export async function GET(
   req: NextRequest,
   { params }: { params: { filename: string } } // ✅ Correctly typed
