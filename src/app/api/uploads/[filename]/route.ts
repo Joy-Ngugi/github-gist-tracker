@@ -34,14 +34,18 @@
 //   }
 // }
 
-
 import { NextResponse } from "next/server";
-import { createReadStream, existsSync } from "fs";
+import { promises as fs, existsSync } from "fs";
 import { join } from "path";
 import type { NextRequest } from "next/server";
+import mime from "mime-types";
 
-export async function GET(req: NextRequest, context: { params: { filename: string } }) {
-  const { filename } = context.params;
+export async function GET(
+  req: NextRequest,
+  context: { params: { filename: string } } // Explicitly defining the params
+) {
+  // Ensure params are awaited if necessary
+  const { filename } = await context.params; // 👈 Explicitly await params
 
   if (!filename) {
     return NextResponse.json({ error: "Filename is required" }, { status: 400 });
@@ -54,18 +58,11 @@ export async function GET(req: NextRequest, context: { params: { filename: strin
   }
 
   try {
-    const stream = createReadStream(filePath);
+    const fileBuffer = await fs.readFile(filePath);
+    const mimeType = mime.lookup(filePath) || "application/octet-stream";
 
-    const webStream = new ReadableStream({
-      start(controller) {
-        stream.on("data", (chunk) => controller.enqueue(chunk));
-        stream.on("end", () => controller.close());
-        stream.on("error", (err) => controller.error(err));
-      },
-    });
-
-    return new NextResponse(webStream, {
-      headers: { "Content-Type": "image/png" }, // Adjust MIME type dynamically if needed
+    return new NextResponse(fileBuffer, {
+      headers: { "Content-Type": mimeType },
     });
 
   } catch (error) {

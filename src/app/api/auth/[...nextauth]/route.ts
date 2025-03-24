@@ -23,8 +23,7 @@ import GithubProvider from "next-auth/providers/github";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "@/lib/mongodb";
 
-// ✅ Define authOptions correctly
-const authOptions = {
+const handler = NextAuth({
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_CLIENT_ID!,
@@ -33,15 +32,6 @@ const authOptions = {
   ],
   adapter: MongoDBAdapter(clientPromise),
   secret: process.env.NEXTAUTH_SECRET,
-};
+});
 
-// ✅ Directly export NextAuth for API routes
-const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
-
-
-
-
-
-
-
+export { handler as GET, handler as POST }; // ✅ Correct App Router export
