@@ -22,6 +22,7 @@ import NextAuth from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import clientPromise from "@/lib/mongodb";
+import { NextRequest, NextResponse } from "next/server";
 
 export const authOptions = {
   providers: [
@@ -36,8 +37,13 @@ export const authOptions = {
 
 const handler = NextAuth(authOptions);
 
-// ✅ Correct Next.js API Route Export Format (App Router)
-export { handler as GET, handler as POST };
+export async function GET(req: NextRequest) {
+  return handler(req, new NextResponse()); // ✅ Ensure NextResponse is provided
+}
+
+export async function POST(req: NextRequest) {
+  return handler(req, new NextResponse());
+}
 
 
 
